@@ -35,7 +35,8 @@ module.exports = {
   plugins: [
     '~/plugins/contentful',
     '~/plugins/components',
-    '~/plugins/scroll'
+    '~/plugins/scroll',
+    '~/plugins/stick-transition'
   ],
 
   /*

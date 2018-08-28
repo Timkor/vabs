@@ -9,9 +9,9 @@
         <div class="content">
 
             <div class="d-flex flex-row">
-                <stick-transition prepare scale :duration="800" :transition-duration="500" easing="ease" name="move" ref="stickTransition">
-                    <img src="~/assets/logo.png" class="logo">
-                </stick-transition>
+                <div class="logo-container">
+                    <img src="~/assets/logo.png" ref=logoSource :style="sourceStyles" class="logo">
+                </div>
                 <div class="text align-self-center">
                     <div class="slogan">Keep your <b>business</b> running</div>
                     <div class="subslogan">While you focus on the important things</div>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    function isScrollingNext() {
+    function isScrolling() {
         return typeof window !== 'undefined' ? window.scrollY > 0 : false;
     }
 
@@ -34,7 +34,8 @@
         data() {
             return {
                 state: -1,
-                isScrolling: isScrollingNext(),
+                scrolling: isScrolling(),
+                sourceStyles: {}
             }
         },
 
@@ -53,30 +54,59 @@
             setInterval(() => {
                 self.state = Math.min(self.state + 1, 2);
             }, 1000);
+
+            console.log(this.$refs.logoSource)
+            console.log(this.$refs.logoSource.getBoundingClientRect())
         },
 
         methods: {
             handleScroll() {
-                if (!this.isScrolling && isScrollingNext()) {
-                    this.isScrolling = true;
 
-                    this.startTransition();
+                if (this.state === 2) {
+
+
+                    if (!this.scrolling && isScrolling()) {
+
+                        var pos = this.$refs.logoSource.getBoundingClientRect();
+
+
+                        this.sourceStyles = {
+                            position: 'fixed',
+                            top: pos.top + 'px',
+                            left: pos.left + 'px',
+
+                        };
+
+                        requestAnimationFrame(() => {
+
+                            var targetPos = document.querySelector('#menu .logo').getBoundingClientRect();
+
+
+                            this.sourceStyles = {
+                                transition: 'all .5s ease',
+                                position: 'fixed',
+                                top: (pos.top + (targetPos.top - pos.top)) + 'px',
+                                left: (pos.left + (targetPos.left - pos.left)) + 'px',
+                                width: 60 + 'px',
+                                height: 60 + 'px',
+                                animation: 'lift .8s ease'
+                            };
+
+                            setTimeout(() => {
+                                this.sourceStyles = {
+                                    opacity: 0,
+                                }
+                            }, 800)
+                        })
+                    }
+
+                    if (this.scrolling && !isScrolling()) {
+                        this.sourceStyles = {};
+                    }
+
+                    this.scrolling = isScrolling();
+
                 }
-
-                if (this.isScrolling && !isScrollingNext()) {
-                    this.isScrolling = false;
-
-                    this.$refs.stickTransition.reset();
-                
-
-                }
-            },
-
-            startTransition() {
-                
-                this.$refs.stickTransition.doEnter(
-                    document.querySelector('#menu .logo')
-                );
             }
         }
 
@@ -132,50 +162,81 @@
             }
         }
 
-
-        .logo {
+        .logo-container {
             width: 200px;
             height: 200px;
+            content: ' ';
         }
 
-        .move-enter .source {
-            opacity: 1;
-            transition: opacity 0s .8s ease;
+        &.state--1 {
+            .content > div {
+                opacity: 0;
+            }
         }
 
-        .move-enter-to .source {
-            opacity: 0;
+        &.state-0 .content {
+
+            & > div {
+                transform: opacity .5s;
+                opacity: 1;
+            }
+
+
+            img {
+                animation: bounce 1s;
+                transform: scale(1);
+            }
+
+            .text {
+                max-width: 0;
+            }
         }
 
-        .move-enter-to .clone .logo {
-            animation: lift .8s;
+        &.state-1 .content {
+
+            img {
+                transform: scale(1);
+            }
+
+            .text {
+                transition: max-width 1s cubic-bezier(.87,-.41,.19,1.44);
+                max-width: 800px;
+            }
         }
 
-        .move-leave-to .source {
-            transition: none;
-            opacity: 0;
+        &.state-2 .content {
+
+            img {
+                transform: scale(1);
+            }
+
+            .text {
+                max-width: 800px;
+
+                .slogan {
+                    transition: opacity .3s ease-in-out;
+                    opacity: 1;
+                }
+
+                .subslogan {
+                    transition: opacity .3s .5s ease-in-out;
+                    opacity: 1;
+                }
+            }
+
+
         }
-
-        @keyframes lift {
-
-            0% { transform: scale(1); opacity: 1 }
-            20% { transform: scale(2); opacity: .7; }
-            50% { transform: scale(2.5); opacity: .7; }
-            80% { transform: scale(2); opacity: .7; }
-            90% { transform: scale(0.75); opacity: 1 }
-            100% { transform: scale(1) }
-        }
-    }
-
-    .scrolling {
-        
 
         .text {
-            transform: translateX(-200px);
+            transition: opacity .5s ease-in-out;
+            opacity: 1;
         }
 
-        .source .logo {
-            opacity: 0;
+        &.scrolling {
+            .text {
+                transition: opacity .5s ease-in-out;
+                opacity: 0;
+            }
         }
     }
 
