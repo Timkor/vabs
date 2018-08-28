@@ -1,10 +1,10 @@
 <template>
-    <b-navbar toggleable="md" variant="faded" type="light" fixed=top id="menu" v-scroll="handleScroll">
+    <b-navbar toggleable="md" variant="faded" type="light" fixed=top id="menu" :class="[variant, {scrolling: isScrolling}]" v-scroll="handleScroll">
         <b-container>
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
             <b-navbar-brand to="/" tag="h1" class="mb-0">
-                <img src="~/assets/logo.png" class="logo" width=60 height=60 :class="{hide: !scrolling}">
+                <img src="~/assets/logo.png" class="logo" width=60 height=60>
             </b-navbar-brand>
 
             <b-collapse is-nav id="nav_collapse">
@@ -32,35 +32,77 @@
 </template>
 <script>
 
-    function isScrolling() {
+    function isScrollingNext() {
         return typeof window !== 'undefined' ? window.scrollY > 0 : false;
     }
 
     export default {
 
+      props: {
+        variant: {
+          type: String,
+          default: 'solid'
+        }
+      },
 
         data() {
           return {
-            scrolling: false
+            isScrolling: isScrollingNext()
           };
         },
 
         methods: {
             handleScroll() {
-                this.scrolling = isScrolling();
+                this.isScrolling = isScrollingNext();
             }
         }
     }
 </script>
-<style lang=less>
+<style lang="less">
+  #menu {
+    &.solid {
+        transition: background-color .4s ease, box-shadow .4s ease;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 1px .5rem rgba(0,0,0,.15);
 
-  .logo {
-    opacity: 1;
-    transition: opacity 0s .8s;
+        .navbar-nav:first-child {
+          transition: transform .2s ease;
+            transform: translateX(0);
+        }
+    }
+    &.transparent {
+      transition: background-color .4s ease, box-shadow .4s ease;
+      background-color: rgba(255, 255, 255, 0);
+      box-shadow: 0 1px .5rem rgba(0,0,0,0);
 
-    &.hide {
-        transition: none;
-      opacity: 0;
+      .logo {
+
+        opacity: 0;
+      }
+
+
+      .navbar-nav:first-child {
+          transition: transform .2s ease;
+          transform: translateX(-76px);
+      }
+      
+
+      &.scrolling {
+        transition: background-color .4s .2s ease, box-shadow .4s .2s ease;
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 1px .5rem rgba(0,0,0,.15);
+
+        .logo {
+          transition: opacity 0s .8s;
+          opacity: 1;
+        }
+
+
+          .navbar-nav:first-child {
+              transform: translateX(0);
+          }
+      }
     }
   }
+
 </style>

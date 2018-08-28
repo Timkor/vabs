@@ -1,5 +1,5 @@
 <template>
-  <div id="footer">
+  <div id="footer" hidden>
     <logo/>
     <h2 class="subtitle">
       Virtual Assistant Business Services

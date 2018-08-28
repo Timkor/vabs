@@ -6,22 +6,24 @@
             </video>
         </div>
 
+        
+
         <div class="content">
+          <b-container>
+              <stick-transition scale :duration="800" :transition-duration="500" easing="ease" name="move" ref="stickTransition">
+                  <img src="~/assets/logo.png" class="logo">
+              </stick-transition>
+              <div class="text align-self-center">
+                  <div class="slogan">Keep your <b>business</b> running</div>
+                  <div class="subslogan">While you focus on the important things</div>
+                  <div class="call-to-action">
+                    <b-button variant="success" size="lg">Learn more</b-button>
+                  </div>
+              </div>
+            </b-container>
+          </div>
 
-            <div class="d-flex flex-row">
-                <stick-transition prepare scale :duration="800" :transition-duration="500" easing="ease" name="move" ref="stickTransition">
-                    <img src="~/assets/logo.png" class="logo">
-                </stick-transition>
-                <div class="text align-self-center">
-                    <div class="slogan">Keep your <b>business</b> running</div>
-                    <div class="subslogan">While you focus on the important things</div>
-                    <!--<div style="padding: 20px 0">
-                      <b-button variant="success" size="lg">Learn more</b-button>
-                    </div>-->
-                </div>
-            </div>
-
-        </div>
+        
     </div>
 </template>
 
@@ -44,7 +46,7 @@
             },
 
             scrollClass() {
-                return this.scrolling ? 'scrolling' : '';
+                return this.isScrolling ? 'scrolling' : '';
             },
         },
 
@@ -57,6 +59,7 @@
 
         methods: {
             handleScroll() {
+
                 if (!this.isScrolling && isScrollingNext()) {
                     this.isScrolling = true;
 
@@ -67,13 +70,13 @@
                     this.isScrolling = false;
 
                     this.$refs.stickTransition.reset();
-                
+
 
                 }
             },
 
             startTransition() {
-                
+
                 this.$refs.stickTransition.doEnter(
                     document.querySelector('#menu .logo')
                 );
@@ -102,40 +105,58 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            text-align: left;
+            flex-direction: column;
+            text-align: center;
 
-            .text {
-                max-width: 0;
-                overflow: hidden;
-                white-space: nowrap;
-                padding-left: 2rem;
+            .container {
 
-                //font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-                display: block;
+              display: flex;
+              justify-content: left;
+              align-items: center;
+              text-align: left;
 
-                font-size: 2rem;
-                color: #526488;
+              
 
-                letter-spacing: 1px;
+              .text {
+                  //max-width: 0;
+                  position: relative;
+                  white-space: nowrap;
+                  padding-left: 2rem;
 
-                .slogan {
-                    color: #35495e;
+                  //font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                  font-family: 'ProximaSoftMark';
+                  display: block;
 
-                    font-size: 3rem;
-                    opacity: 0;
-                }
+                  font-size: 2rem;
+                  color: #526488;
+                  transition: transform .2s ease;
+                  letter-spacing: 1px;
 
-                .subslogan {
-                    opacity: 0;
-                }
+                  .slogan {
+                      color: #35495e;
+
+                      font-size: 3rem;
+                      //opacity: 0;
+                  }
+
+                  .subslogan {
+                      //opacity: 0;
+                  }
+
+                  .call-to-action {
+                    position: absolute;
+                    bottom: -4rem;
+                  }
+              }
             }
+            
         }
 
 
-        .logo {
+        .source .logo {
             width: 200px;
             height: 200px;
+            animation: bounce 1s 1s;
         }
 
         .move-enter .source {
@@ -156,28 +177,21 @@
             opacity: 0;
         }
 
-        @keyframes lift {
+        &.scrolling {
 
-            0% { transform: scale(1); opacity: 1 }
-            20% { transform: scale(2); opacity: .7; }
-            50% { transform: scale(2.5); opacity: .7; }
-            80% { transform: scale(2); opacity: .7; }
-            90% { transform: scale(0.75); opacity: 1 }
-            100% { transform: scale(1) }
-        }
+
+          .text {
+              transition: transform .2s ease;
+              transform: translateX(-232px);
+          }
+
+          .source .logo {
+              opacity: 0;
+          }
+      }
     }
 
-    .scrolling {
-        
-
-        .text {
-            transform: translateX(-200px);
-        }
-
-        .source .logo {
-            opacity: 0;
-        }
-    }
+    
 
     @f: 1/.85;
 

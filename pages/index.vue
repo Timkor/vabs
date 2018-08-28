@@ -1,8 +1,15 @@
 <template>
-  <section>
+  <div class="index-page">
     <Intro />
 
-  </section>
+    <section>
+        <b-container>
+          <h1>
+            Assistance adapted to <b>you</b>
+          </h1>
+        </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -14,19 +21,11 @@ export default {
   }
 };
 </script>
-
-<style>
-@font-face {
-  font-family: 'ProximaSoftMark';
-  src: url('~/assets/fonts/proxima-soft-medium-mark.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-body {
-  font-family: 'ProximaSoftMark';
-  font-size: 1rem;
-}
-#menu {
-  //opacity: 0;
-}
+<style lang="less">
+  .index-page {
+    section {
+      padding: 10rem 0;
+      height: 1vh;
+    }
+  }
 </style>
