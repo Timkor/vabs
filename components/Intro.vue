@@ -6,7 +6,7 @@
             </video>
         </div>
 
-        
+
 
         <div class="content">
           <b-container>
@@ -16,14 +16,14 @@
               <div class="text align-self-center">
                   <div class="slogan">Keep your <b>business</b> running</div>
                   <div class="subslogan">While you focus on the important things</div>
-                  <div class="call-to-action">
+                  <div class="call-to-action" hidden>
                     <b-button variant="success" size="lg">Learn more</b-button>
                   </div>
               </div>
             </b-container>
           </div>
 
-        
+
     </div>
 </template>
 
@@ -115,7 +115,7 @@
               align-items: center;
               text-align: left;
 
-              
+
 
               .text {
                   //max-width: 0;
@@ -149,7 +149,7 @@
                   }
               }
             }
-            
+
         }
 
 
@@ -181,8 +181,8 @@
 
 
           .text {
-              transition: transform .2s ease;
-              transform: translateX(-232px);
+              //transition: transform .2s ease;
+              //transform: translateX(-232px);
           }
 
           .source .logo {
@@ -191,7 +191,7 @@
       }
     }
 
-    
+
 
     @f: 1/.85;
 
