@@ -11,11 +11,11 @@
 
                 <b-navbar-nav>
 
-                    <b-nav-item to="/assistance">Assistance</b-nav-item>
-                    <b-nav-item to="/content">Content</b-nav-item>
-                    <b-nav-item to="/marketing">Marketing</b-nav-item>
-                    <b-nav-item to="/development">Development</b-nav-item>
-                    <b-nav-item to="/events">Events</b-nav-item>
+                    <b-nav-item to="/assistance/">Assistance</b-nav-item>
+                    <b-nav-item to="/content/">Content</b-nav-item>
+                    <b-nav-item to="/marketing/">Marketing</b-nav-item>
+                    <b-nav-item to="/development/">Development</b-nav-item>
+                    <b-nav-item to="/events/">Events</b-nav-item>
                 </b-navbar-nav>
 
                 <b-navbar-nav class="ml-auto align-items-center">
@@ -85,7 +85,7 @@
           transition: transform .2s ease;
           transform: translateX(-76px);
       }
-      
+
 
       &.scrolling {
         transition: background-color .4s .2s ease, box-shadow .4s .2s ease;
