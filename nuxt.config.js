@@ -47,7 +47,7 @@ module.exports = {
     '@nuxtjs/axios',
 
     ['nuxt-fontawesome', {
-      component: 'fa', 
+      component: 'fa',
       imports: [
         //import whole set
         {
@@ -85,5 +85,15 @@ module.exports = {
         })
       }
     }
+  },
+
+  generate: {
+    routes: [
+      '/assistance',
+      '/content',
+      '/marketing',
+      '/development',
+      '/events'
+    ]
   }
 }
